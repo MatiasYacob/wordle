@@ -1,5 +1,16 @@
 import requests
 
+#=diccionario de colores==#
+colors = {
+    'green': '\033[92m',
+    'yellow': '\033[93m',
+    'red': '\033[91m',
+    'ENDC': '\033[0m',
+}
+def color_letter(letter, color):
+    return colors[color] + letter + colors ['ENDC']
+
+
 class RAEApi:
     URL = "https://rae-api.com/api/random"
 
@@ -35,11 +46,37 @@ print(rae.get_random_word(length=7))   # exactamente 7 letras
 # wordle
 # wordle es un juego de palabras que se juega con una palabra aleatoria
 #===iniciar el tablero===#
+win = False
+word = "trineo"
 board = []
 for i in range(6):
     board.append(["◻" for _ in range(6)])
+glc = 0
+while not win:
+    text = input("Introduce una palabra: ")
+    while len(text) != len(word):
+        if len(text) != len(word):
+            print(f"La palabra debe tener {len(word)} letras")
+        text = input("Introduce una palabra: ")
 
-#===imprimir el tablero===#
-for i in range(6):
-    board.append(["◻" for _ in range(6)])
-    print (" ".join(board[i]))
+    #win logic
+    if word == text:
+        board[glc] = [l for l in text]
+        win = True
+    #letter in word
+    else:
+        test_line = []
+        for j in range(len(text)):
+            if text[j] == word[j]:
+                test_line.append(text[j])
+            elif text [j] in word: 
+                test_line.append(color_letter(text[j],'yellow'))
+            else:
+                test_line.append(color_letter(text[j],'red'))
+        board[glc] = test_line      
+       
+    #===imprimir el tablero===#trinio
+    for i in range(6):
+        board.append(["◻" for _ in range(6)])
+        print (" ".join(board[i]))
+    glc += 1
