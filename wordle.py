@@ -30,3 +30,16 @@ rae = RAEApi()
 
 print(rae.get_random_word(length=7))   # exactamente 7 letras
 
+
+
+# wordle
+# wordle es un juego de palabras que se juega con una palabra aleatoria
+#===iniciar el tablero===#
+board = []
+for i in range(6):
+    board.append(["◻" for _ in range(6)])
+
+#===imprimir el tablero===#
+for i in range(6):
+    board.append(["◻" for _ in range(6)])
+    print (" ".join(board[i]))
