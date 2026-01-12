@@ -33,14 +33,23 @@ Powered by RAE
 """.strip("\n")
 
 
+
 # ============================================================
-#               CONFIGURACION GENERAL
+#            MANEJO DE PARTIDAS (CSV)
 # ============================================================
 
-MAX_INTENTOS = 6
-ARCHIVO_DATOS = "wordle_data.csv"
+# Lee todas las partidas guardadas en el archivo CSV y las devuelve como una lista
+def leer_partidas():
+    ARCHIVO_DATOS = "wordle_data.csv"
+    ruta = Path(ARCHIVO_DATOS)
+    if not ruta.exists():
+        return []
+    with ruta.open("r", newline="", encoding="utf-8") as archivo:
+        return list(csv.DictReader(archivo))
 
-CAMPOS_CSV = [
+# Agrega una fila con una partida nueva al archivo CSV
+def guardar_fila_partida(fila):
+    CAMPOS_CSV = [
     "timestamp",
     "palabra",
     "largo",
@@ -48,22 +57,8 @@ CAMPOS_CSV = [
     "intentos",
     "racha_actual",
     "mejor_racha"
-]
-
-
-# ============================================================
-#            MANEJO DE PARTIDAS (CSV)
-# ============================================================
-
-def leer_partidas():
-    ruta = Path(ARCHIVO_DATOS)
-    if not ruta.exists():
-        return []
-    with ruta.open("r", newline="", encoding="utf-8") as archivo:
-        return list(csv.DictReader(archivo))
-
-
-def guardar_fila_partida(fila):
+                ]
+    ARCHIVO_DATOS = "wordle_data.csv"
     ruta = Path(ARCHIVO_DATOS)
     existe = ruta.exists()
 
@@ -73,7 +68,7 @@ def guardar_fila_partida(fila):
             escritor.writeheader()
         escritor.writerow(fila)
 
-
+# Calcula cuantas partidas se jugaron, cuantas se ganaron y las rachas
 def calcular_estadisticas(partidas):
     estadisticas = {
         "jugadas": 0,
@@ -95,7 +90,7 @@ def calcular_estadisticas(partidas):
 
     return estadisticas
 
-
+# Guarda una partida nueva y actualiza la racha actual y la mejor racha
 def registrar_partida(palabra, gano, intentos_usados):
     partidas = leer_partidas()
     stats = calcular_estadisticas(partidas)
@@ -115,7 +110,7 @@ def registrar_partida(palabra, gano, intentos_usados):
 
     guardar_fila_partida(fila)
 
-
+# Devuelve un texto con todas las estadisticas formateadas para mostrar en pantalla
 def texto_estadisticas():
     partidas = leer_partidas()
     stats = calcular_estadisticas(partidas)
@@ -134,6 +129,7 @@ def texto_estadisticas():
 #              COLORES PARA LAS LETRAS
 # ============================================================
 
+# Devuelve una letra con el color correspondiente segun el resultado
 def pintar_letra(letra, color):
     estilos = {
         "verde": "bold green",
@@ -150,12 +146,14 @@ def pintar_letra(letra, color):
 class RAEApi:
     URL_RANDOM = "https://rae-api.com/api/random"
     URL_WORDS = "https://rae-api.com/api/words"
-
+    
+    # Quita los acentos de una palabra para poder compararla correctamente
     def quitar_acentos(self, texto):
         return texto.translate(str.maketrans("áéíóúÁÉÍÓÚ", "aeiouAEIOU"))
 
+    # Obtiene una palabra aleatoria de la RAE segun el largo pedido
     def obtener_palabra(self, largo=None, minimo=None, maximo=None):
-        # Pide una palabra aleatoria (solo palabra)
+        
         parametros = {}
 
         if largo is not None:
@@ -172,6 +170,7 @@ class RAEApi:
 
         return self.quitar_acentos(datos["data"]["word"]).lower()
 
+    # Obtiene una palabra aleatoria de la RAE y su significado
     def obtener_palabra_y_significado(self, largo):
         # 1) pedir palabra random
         r = requests.get(
@@ -203,14 +202,16 @@ rae = RAEApi()
 #               LOGICA DEL JUEGO
 # ============================================================
 
+# Le pregunta al jugador cuantas letras quiere y obtiene una palabra con ese largo
 def elegir_largo_palabra():
     largo = IntPrompt.ask("Cuantas letras debe tener la palabra", default=6)
     if largo < 2:
         largo = 2
     return rae.obtener_palabra_y_significado(largo)
 
-
+# Controla toda la logica de una partida de Wordle
 def jugar():
+    MAX_INTENTOS = 6
     palabra, significado = elegir_largo_palabra()
     largo = len(palabra)
 
@@ -259,12 +260,13 @@ def jugar():
 #                    INTERFAZ
 # ============================================================
 
+# Muestra un mensaje dentro de un panel y espera que el usuario presione Enter
 def pantalla(titulo, mensaje):
     consola.clear()
     consola.print(Panel(str(mensaje), title=titulo, border_style="green"))
     input("Enter para volver...")
 
-
+# Muestra el menu principal y maneja las opciones del juego
 def menu():
     while True:
         consola.clear()
@@ -292,5 +294,11 @@ def menu():
             break
 
 
+
+
+# Este bloque hace que el programa se ejecute solo cuando se corre este archivo directamente
+# y no cuando se importa desde otro archivo
+
 if __name__ == "__main__":
     menu()
+
