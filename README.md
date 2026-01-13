@@ -1,68 +1,66 @@
-# Wordle en Espanol con RAE
+# Wordle in Spanish with RAE
 
-Un Wordle en consola hecho en Python que usa la Real Academia Espanola (RAE) para obtener palabras reales y mostrar su significado al final de cada partida.
+A console Wordle game written in Python that uses the Real Academia Espanola (RAE) to fetch real Spanish words and display their meaning at the end of each round.
 
-> La diferencia entre el maestro y el alumno no es el talento: es que el maestro ya se equivoco mas veces de las que el alumno siquiera se atrevio a intentar.
+> Este proyecto fue desarrollado como un desafio propuesto por un companero de la UTN, con el objetivo de poner en practica el uso de APIs, el manejo de datos y la organizacion de un proyecto real en Python.
 
-## Caracteristicas
+## Features
 
-- Palabras reales obtenidas desde la RAE
-- Longitud de palabra configurable
-- Colores estilo Wordle
-- Sistema de estadisticas en CSV
-- Muestra el significado real de la palabra al finalizar la ronda
+- Real Spanish words fetched from the RAE (Real Academia Española)
+- Configurable word length
+- Wordle-style colored feedback
+- CSV-based statistics system
+- Shows the real meaning of the word after each round
 
-## Requisitos
+## Requirements
 
-Instala las dependencias:
+Install the dependencies:
 
 ```bash
 pip install requests rich
 ```
 
-Necesitas Python 3.10 o superior.
+You need Python 3.10 or higher.
 
-## Como ejecutar
+## How to run
 
-Desde la carpeta del proyecto:
-
-```bash
-python wordle.py
-```
-
-## Probar la API de la RAE
-
-Podes ejecutar:
+From the project folder:
 
 ```bash
-python test_rae.py
+python main.py
 ```
 
-Eso imprime el JSON crudo que devuelve la RAE, incluyendo definiciones, sinonimos y conjugaciones.
 
-## Como funciona
 
-1. Se pide una palabra aleatoria a la RAE
-2. Se consulta su definicion
-3. El jugador intenta adivinarla
-4. Al final se muestra:
+## How it works
+
+1. A random word is requested from the RAE  
+2. Its definition is requested using another endpoint  
+3. The player tries to guess the word  
+4. At the end of the round the game shows:
 
 ```text
-La palabra era: amar
-Significado: Tener amor a alguien o algo
+The word was: amar
+Meaning: Tener amor a alguien o algo
 ```
 
-## Estructura del proyecto
+## Project structure
 
 ```text
-wordle.py
-test_rae.py
+main.py
+config.py
+game.py
+ui.py
+render.py
+rae_api.py
+storage.py
 wordle_data.csv
 .gitignore
 README.md
 ```
 
-## Enlaces utiles
+## Useful links
 
-- API RAE: https://rae-api.com
-- Python: https://www.python.org
+- RAE API: https://rae-api.com  
+- Rich (console formatting): https://rich.readthedocs.io  
+- Python: https://www.python.org 
