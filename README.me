@@ -1,86 +1,83 @@
-🟩 Wordle en Español (RAE)
+# 🟩 Wordle en Español (RAE)
 
 Un Wordle en consola escrito en Python, que usa la Real Academia Española (RAE) para obtener palabras reales del español y mostrar su significado al final de cada partida.
 
 Este proyecto combina juego y aprendizaje: no solo adivinas palabras, sino que tambien aprendes que significan.
 
-🚀 Caracteristicas
+## 🚀 Caracteristicas
 
-Palabras reales obtenidas desde la RAE
+- **Palabras reales obtenidas desde la RAE**
 
-Longitud de palabra configurable
+- **Longitud de palabra configurable**
 
-Sistema de colores estilo Wordle:
+- **Sistema de colores estilo Wordle:**
+  - 🟩 Verde → letra correcta en posicion correcta
+  - 🟨 Amarillo → letra correcta en posicion incorrecta
+  - 🟥 Rojo → letra que no esta en la palabra
 
-🟩 Verde → letra correcta en posicion correcta
+- **Estadisticas guardadas en CSV:**
+  - partidas jugadas
+  - partidas ganadas
+  - porcentaje de aciertos
+  - racha actual
+  - mejor racha
 
-🟨 Amarillo → letra correcta en posicion incorrecta
+- **Al finalizar la ronda se muestra el significado de la palabra**
 
-🟥 Rojo → letra que no esta en la palabra
-
-Estadisticas guardadas en CSV:
-
-partidas jugadas
-
-partidas ganadas
-
-porcentaje de aciertos
-
-racha actual
-
-mejor racha
-
-Al finalizar la ronda se muestra el significado de la palabra
-
-📦 Requisitos
+## 📦 Requisitos
 
 Necesitas Python 3.10 o superior y estas librerias:
 
-requests
-rich
-
+- `requests`
+- `rich`
 
 Instalarlas con:
 
+```bash
 pip install requests rich
+```
 
-▶️ Como ejecutar
+## ▶️ Como ejecutar
 
 Desde la carpeta del proyecto:
 
+```bash
 python wordle.py
+```
 
-🧪 Archivo de prueba de la RAE
+## 🧪 Archivo de prueba de la RAE
 
-El archivo test_rae.py sirve para probar la API de la RAE y ver el JSON que devuelve con las definiciones.
+El archivo `test_rae.py` sirve para probar la API de la RAE y ver el JSON que devuelve con las definiciones.
 
 Ejecutar:
 
+```bash
 python test_rae.py
+```
 
-📁 Estructura del proyecto
+## 📁 Estructura del proyecto
+
+```
 wordle.py        # Juego principal
 test_rae.py      # Prueba de la API de la RAE
 wordle_data.csv  # Estadisticas de partidas
 .gitignore
 README.md
+```
 
-🧠 Como funciona
+## 🧠 Como funciona
 
-El juego pide una palabra aleatoria a la RAE
+1. El juego pide una palabra aleatoria a la RAE
 
-Luego pide su definicion usando otro endpoint
+2. Luego pide su definicion usando otro endpoint
 
-El jugador intenta adivinar la palabra
+3. El jugador intenta adivinar la palabra
 
-Al terminar la ronda, se muestra:
+4. Al terminar la ronda, se muestra:
+   - si gano o perdio
+   - cual era la palabra
+   - que significaba segun la RAE
 
-si gano o perdio
-
-cual era la palabra
-
-que significaba segun la RAE
-
-📜 Licencia
+## 📜 Licencia
 
 Este proyecto es libre para uso educativo y personal
