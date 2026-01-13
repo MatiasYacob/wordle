@@ -47,16 +47,25 @@ Meaning: Tener amor a alguien o algo
 ## Project structure
 
 ```text
-main.py
-config.py
-game.py
-ui.py
-render.py
-rae_api.py
-storage.py
-wordle_data.csv
-.gitignore
-README.md
+main.py – Entry point of the application. Starts the program and launches the main menu.
+
+config.py – Contains global configuration values such as max attempts and file paths.
+
+game.py – Implements the core game logic (word checking, win/lose, rounds).
+
+ui.py – Handles menus, screens, and user interaction in the console.
+
+render.py – Manages colored output and visual rendering using Rich.
+
+rae_api.py – Connects to the RAE API to fetch random words and their meanings.
+
+storage.py – Manages saving and loading game statistics using CSV files.
+
+wordle_data.csv – Stores the history of played games and statistics.
+
+.gitignore – Specifies which files and folders should not be tracked by Git.
+
+README.md – Project documentation and usage instructions.
 ```
 
 ## Useful links
